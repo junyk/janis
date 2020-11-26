@@ -23,8 +23,8 @@ jobs:
         pip install -e .[tests]
     - name: Call Test manager
       uses: fjogeleit/http-request-action@master
-        with:
-          url: 'https://${{ secrets.TEST_MANAGER_HOST }}/runs'
-          method: 'POST'
-          bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
-          data: '{"template_id": "${{ secrets.TEST_MANAGER_HOST }}"}'
+      with:
+        url: 'https://${{ secrets.TEST_MANAGER_HOST }}/runs'
+        method: 'POST'
+        bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
+        data: '{"template_id": "${{ secrets.TEST_MANAGER_HOST }}"}'
