@@ -17,9 +17,12 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Call Test manager
+      id: test-manager
       uses: fjogeleit/http-request-action@master
       with:
         url: 'http://${{ secrets.TEST_MANAGER_HOST }}/runs/'
         method: 'POST'
         bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
         data: '{"template_id": "${{ secrets.TEST_MANAGER_HOST }}"}'
+    - name: Check Run Status
+      run: python check_test_status.py ${{ steps.test-manager.outputs.response }}
