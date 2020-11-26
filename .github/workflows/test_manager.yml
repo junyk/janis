@@ -26,5 +26,9 @@ jobs:
 #              method: 'POST'
 #        bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
 #        data: '{"template_id": "${{ secrets.TEST_MANAGER_HOST }}"}'
+    - name: Get run id
+      id: get-run-id
+      run:
+        - echo "::set-output name=run_id::${{ steps.test-manager.outputs.response }} | jq '.data.id'"
     - name: Check Run Status
-      run: python check_test_status.py ${{ steps.test-manager.outputs.response }}
+      run: python check_test_status.py ${{ steps.get-run-id.outputs.run_id }}
