@@ -20,9 +20,11 @@ jobs:
       id: test-manager
       uses: fjogeleit/http-request-action@master
       with:
-        url: 'http://${{ secrets.TEST_MANAGER_HOST }}/runs/'
-        method: 'POST'
-        bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
-        data: '{"template_id": "${{ secrets.TEST_MANAGER_HOST }}"}'
+        url: 'http://${{ secrets.TEST_MANAGER_HOST }}/runs/5fbf3f769289b6b8388ff310'
+        method: 'GET'
+#        url: 'http://${{ secrets.TEST_MANAGER_HOST }}/runs/'
+#              method: 'POST'
+#        bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
+#        data: '{"template_id": "${{ secrets.TEST_MANAGER_HOST }}"}'
     - name: Check Run Status
       run: python check_test_status.py ${{ steps.test-manager.outputs.response }}
