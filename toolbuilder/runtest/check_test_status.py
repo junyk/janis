@@ -1,5 +1,4 @@
 import sys
-import requests
 
 def check_test_status(run_id: str):
     print(run_id)
