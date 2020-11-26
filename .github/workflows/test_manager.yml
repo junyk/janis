@@ -26,7 +26,7 @@ jobs:
 #              method: 'POST'
 #        bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
 #        data: '{"template_id": "${{ secrets.TEST_MANAGER_HOST }}"}'
-      env:
-        RUN_ID: echo ${{ steps.test-manager.outputs.response }} | jq '.data.id'
     - name: Check Run Status
-      run: python  toolbuilder/runtest/check_test_status.py $RUN_ID
+      run: |
+        export run_id=`echo ${{ steps.test-manager.outputs.response }} | jq '.data.id'`
+        python  toolbuilder/runtest/check_test_status.py $RUN_ID
