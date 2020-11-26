@@ -29,4 +29,4 @@ jobs:
     - name: Check Run Status
       run: |
         export run_id=`echo '${{ steps.test-manager.outputs.response }}' | jq '.data.id'`
-        python  toolbuilder/runtest/check_test_status.py $RUN_ID
+        python  toolbuilder/runtest/check_test_status.py $run_id
