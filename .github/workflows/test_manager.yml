@@ -1,6 +1,13 @@
 name: Test manager
 
-on: [push]
+on:
+  push:
+    branches:
+      - test-workflow
+#      - master
+    pull_request:
+      branches:
+        - master
 
 jobs:
   build:
@@ -9,24 +16,28 @@ jobs:
       matrix:
         python-version: [3.6]
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests
-    - name: Call Test manager
-      id: test-manager
-      uses: fjogeleit/http-request-action@master
-      with:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Test manager
+        id: test-manager
+        uses: fjogeleit/http-request-action@master
+        with:
 #        url: 'http://${{ secrets.TEST_MANAGER_HOST }}/runs/5fbf3f769289b6b8388ff310'
 #        method: 'GET'
-        url: 'http://${{ secrets.TEST_MANAGER_HOST }}/runs/'
-        method: 'POST'
-        bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
-        data: '{"template_id": "${{ secrets.TEST_TEMPLATE_ID }}", "install_extras": ["git+https://github.com/PMCC-BioinformaticsCore/janis-core.git@unit-test-with-janis-prepare", "git+https://github.com/PMCC-BioinformaticsCore/janis-bioinformatics.git@github-actions", "git+https://github.com/PMCC-BioinformaticsCore/janis-assistant.git@v0.11.x", "git+https://github.com/PMCC-BioinformaticsCore/janis.git@devkit"]}'
+          url: 'http://${{ secrets.TEST_MANAGER_HOST }}/runs/'
+          method: 'POST'
+          bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
+          data: '{"template_id": "${{ secrets.TEST_TEMPLATE_ID }}", "install_extras": ["git+https://github.com/PMCC-BioinformaticsCore/janis-core.git@unit-test-with-janis-prepare", "git+https://github.com/PMCC-BioinformaticsCore/janis-bioinformatics.git@github-actions", "git+https://github.com/PMCC-BioinformaticsCore/janis-assistant.git@v0.11.x", "git+https://github.com/PMCC-BioinformaticsCore/janis.git@devkit"]}'
 
 
