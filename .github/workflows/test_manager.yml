@@ -27,6 +27,6 @@ jobs:
         url: 'http://${{ secrets.TEST_MANAGER_HOST }}/runs/'
         method: 'POST'
         bearerToken: ${{ secrets.TEST_MANAGER_TOKEN }}
-        data: '{"template_id": "${{ secrets.TEST_MANAGER_HOST }}", "install_extras": ["git+https://github.com/PMCC-BioinformaticsCore/janis-core.git@unit-test-with-janis-prepare", "git+https://github.com/PMCC-BioinformaticsCore/janis-bioinformatics.git@github-actions", "git+https://github.com/PMCC-BioinformaticsCore/janis-assistant.git@v0.11.x", "git+https://github.com/PMCC-BioinformaticsCore/janis.git@devkit"]}'
+        data: '{"template_id": "${{ secrets.TEST_TEMPLATE_ID }}", "install_extras": ["git+https://github.com/PMCC-BioinformaticsCore/janis-core.git@unit-test-with-janis-prepare", "git+https://github.com/PMCC-BioinformaticsCore/janis-bioinformatics.git@github-actions", "git+https://github.com/PMCC-BioinformaticsCore/janis-assistant.git@v0.11.x", "git+https://github.com/PMCC-BioinformaticsCore/janis.git@devkit"]}'
 
 
